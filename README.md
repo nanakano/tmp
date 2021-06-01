@@ -10,35 +10,49 @@
 
 7a.
 - PDUセッションにダイナミックPCCが使用される場合、SMFはTS 23.501の6.3.7.1項に記載されているようにPCFの選択を行う。
-- Request Typeが "Existing PDU Session "または "Existing Emergency PDU Session "を示している場合
+- Request Typeが "Existing PDU Session"または "Existing Emergency PDU Session "を示している場合
   - SMFはPDU Sessionのために既に選択されたPCFを使用する。
 
 7b.
 - SMFは、4.16.4項で定義されているSMポリシーアソシエーション確立手順を実行して、PCFとの間でSMポリシーアソシエーションを確立し、PDUセッションのためのデフォルトPCCルールを取得することができる。
-
-- 手順3の要求タイプが「既存のPDUセッション」を示す場合
+- 手順3のRequest Typeが「Existing PDU Session」を示す場合
   - SMFは、4.16.5.1項に定義されているように、SMFが開始したSMポリシーアソシエーション変更手順によって満たされたポリシー制御要求トリガー条件（複数可）に関する情報を提供してもよい。
+
+<!--
 - PCFは、5.2.5.4項（およびTS 23.503[20]）で定義されたポリシー情報をSMFに提供することができる。
 - PCFは、Emergency DNNに基づいて、TS 23.503 [20]に記載されているように、PCCルールのARPをEmergencyサービス用に予約された値に設定する。
 - 注5: 手順7の目的は、UPFを選択する前にPCCルールを受信することである。UPF選択の入力としてPCCルールが必要ない場合、手順7は手順8の後に実行することができる。
+-->
 
 9
 - SMFは、4.16.5.1項で定義されたSMF開始のSMポリシーアソシエーション変更手順を実行して、満たされたポリシー制御要求トリガー条件（複数可）に関する情報を提供することができる。
-- Request Typeが "initial request "で、dynamic PCCが展開されており、PDU Session TypeがIPv4 or IPv6 or IPv4v6の場合、SMFは、割り当てられたUEのIPアドレス／プレフィックス（es）をPCFに通知します（Policy Control Request Trigger条件が満たされた場合）。
+- Request Typeが "initial request "で、dynamic PCCが展開されており、PDU Session TypeがIPv4 or IPv6 or IPv4v6の場合
+  - SMFは、割り当てられたUEのIPアドレス／プレフィックス（es）をPCFに通知します（Policy Control Request Trigger条件が満たされた場合）。
+
+<!--
 - PCFが配備されている場合、PSデータオフ・ポリシー制御要求トリガが設定されていれば、SMFはさらにPSデータオフ・ステータスをPCFに報告しなければなりません。
 - 3GPP PSデータオフに関するSMFおよびPCFの追加動作は、TS 23.503 [20]で定義されています。
 - 注7: ステップ7の前にIPアドレス／プレフィックスが割り当てられている場合（例：UDM／UDRに登録されたスタティックIPアドレス／プレフィックス）、またはステップ8の後にステップ7が実行される場合、IPアドレス／プレフィックスはステップ7でPCFに提供することができ、本ステップでのIPアドレス／プレフィックスの通知はスキップすることができる。
 - PCFは、更新されたポリシーをSMFに提供してもよい。
 - PCFは、5.2.5.4項（およびTS 23.503[20]）で定義されたポリシー情報をSMFに提供することができる。
 
+-->
+
 10a.
 - SMFはUPFにN4 Session Establishment/Modification Requestを送信し、このPDU SessionのためにUPFにインストールされるパケット検出、実施、報告のルールを提供します。
-- TS 23.501 [2]の5.8.2項に記載されているように、SMFがUPFからIPアドレスの割り当てを要求するように設定されている場合、SMFはUPFに対してIPアドレス／プレフィックスの割り当てを実行するように指示し、UPFが割り当てを実行するために必要な情報を含みます。
-- このPDUセッションで選択的なユーザプレーンの非活性化が必要な場合、SMFは非活性化タイマを決定し、UPFに提供します。
-- SMF は、Trace Requirements を受信した場合には、Trace Requirements を UPF に提供します。
-- TS 23.501 [2]で規定されているように、SMFがPDUセッションに対してReliable Data Serviceを有効にしている場合は、このステップでRDS Configuration情報がUPFに提供されます。
+
+- SMFがUPFからIPアドレスの割り当てを要求するように設定されている場合
+  - SMFはUPFに対してIPアドレス／プレフィックスの割り当てを実行するように指示し、UPFが割り当てを実行するために必要な情報を含みます。(詳細TS 23.501の5.8.2項)
+
+- このPDUセッションで選択的なユーザプレーンの非活性化が必要な場合
+  - SMFは非活性化タイマを決定し、UPFに提供します。
+- SMF は、Trace Requirements を受信した場合
+  - Trace Requirements を UPF に提供します。
+- TS 23.501 で規定されているように、SMFがPDUセッションに対してReliable Data Serviceを有効にしている場合
+  - このステップでRDS Configuration情報がUPFに提供されます。
 - 必要に応じて、SMFはPDUセッションのSmall Data Rate ControlパラメータをUPFに提供する。
-- AMFから受信した場合、SMFはUPFにスモールデータレートコントロールステータスを提供します。
+- AMFから受信した場合
+  - SMFはUPFにスモールデータレートコントロールステータスを提供します。
 - サービングPLMNがこのPDUセッションに対してサービングPLMNレートコントロール（TS 23.501 [2]の5.31.14.2項参照）を実施しようとする場合、SMFはダウンリンクコントロールプレーンデータパケットのレートを制限するためのサービングPLMNレートコントロールパラメータをUPFに提供するものとします。
 - イーサネットタイプのPDUセッションの場合、SMFは（例えば、ある要求されたDNN／S-NSSAIの場合）、ポート番号の提供をUPFに要求する表示を含むことができる。
 - TS 23.501 [2]の5.33.1.2項に記載されているように、SMFがPDUセッションの1つ以上のQoSフローに対して冗長伝送を行うことを決定した場合、SMFはUPFから2つのCNトンネル情報を要求する。
